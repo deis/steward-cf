@@ -1,59 +1,39 @@
 package main
 
 import (
-	"context"
-	"net/http"
 	"os"
 
-	modeutils "github.com/deis/steward/mode/utils"
-	"github.com/deis/steward/web/api"
+	"github.com/deis/steward-cf/lib"
+	"github.com/deis/steward-framework/runner"
 	"github.com/juju/loggo"
 )
 
-var (
-	logger  = loggo.GetLogger("")
-	version = "dev"
-)
-
-func exitWithCode(cancelFn func(), exitCode int) {
-	cancelFn()
-	os.Exit(exitCode)
-}
-
 func main() {
-	logger.Infof("steward version %s started", version)
-	cfg, err := getRootConfig()
+	// Default to INFO level logging until we load configuration and learn the desired log level
+	logger.SetLogLevel(loggo.INFO)
+	logger.Infof("steward-cf version %s starting", version)
+
+	cfg, err := getConfig()
 	if err != nil {
-		logger.Criticalf("error getting config (%s)", err)
+		logger.Criticalf("error getting config: %s", err)
 		os.Exit(1)
 	}
 	logger.SetLogLevel(cfg.logLevel())
 
-	errCh := make(chan error)
-	rootCtx := context.Background()
-	httpCl := http.DefaultClient
-	ctx, cancelFn := context.WithCancel(rootCtx)
-	defer cancelFn()
-
-	cleanup, err := modeutils.Run(ctx, httpCl, cfg.Mode, cfg.BrokerName, errCh, cfg.WatchNamespaces)
+	cataloger, lifecycler, err := lib.GetComponents()
 	if err != nil {
-		logger.Criticalf("Error starting %s mode: %s", cfg.Mode, err)
-		exitWithCode(cancelFn, 1)
+		logger.Criticalf("error getting components: %s", err)
+		os.Exit(1)
 	}
-	defer cleanup()
 
-	// Start the API server
-	go api.Serve(errCh)
-
-	// TODO: listen for signal and delete all service catalog entries before quitting
-	select {
-	case err := <-errCh:
-		if err != nil {
-			logger.Criticalf("%s", err)
-			exitWithCode(cancelFn, 1)
-		} else {
-			logger.Criticalf("unknown error, crashing")
-			exitWithCode(cancelFn, 1)
-		}
+	if err = runner.Run(
+		cfg.BrokerName,
+		cfg.Namespaces,
+		cataloger,
+		lifecycler,
+		cfg.getMaxAsyncDuration(),
+		cfg.APIPort,
+	); err != nil {
+		logger.Criticalf("error running steward-framework: %s", err)
 	}
 }

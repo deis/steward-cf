@@ -1,26 +1,35 @@
 package main
 
 import (
-	"github.com/deis/steward/config"
+	"time"
+
 	"github.com/juju/loggo"
+	"github.com/kelseyhightower/envconfig"
 )
 
-type rootConfig struct {
+type config struct {
 	BrokerName      string   `envconfig:"BROKER_NAME" required:"true"`
-	Mode            string   `envconfig:"MODE" required:"true"`
+	Namespaces      []string `envconfig:"WATCH_NAMESPACES" default:"default"`
+	MaxAsyncMinutes int      `envconfig:"MAX_ASYNC_MINUTES" default:"60"`
+	APIPort         int      `envconfig:"API_PORT" default:"8080"`
 	LogLevel        string   `envconfig:"LOG_LEVEL" default:"info"`
-	WatchNamespaces []string `envconfig:"WATCH_NAMESPACES" default:"default"`
 }
 
-func getRootConfig() (*rootConfig, error) {
-	ret := new(rootConfig)
-	if err := config.Load(ret); err != nil {
+func getConfig() (*config, error) {
+	ret := &config{}
+	if err := envconfig.Process("", ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 }
 
-func (c rootConfig) logLevel() loggo.Level {
+// getMaxAsyncDuration returns the maximum time spent on an aysnchronous provisioning or
+// deprovisioning before giving up on polling for the last operation
+func (c *config) getMaxAsyncDuration() time.Duration {
+	return time.Duration(time.Duration(c.MaxAsyncMinutes) * time.Minute)
+}
+
+func (c config) logLevel() loggo.Level {
 	switch c.LogLevel {
 	case "trace":
 		return loggo.TRACE

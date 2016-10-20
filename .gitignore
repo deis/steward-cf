@@ -23,14 +23,13 @@ _testmain.go
 *.test
 *.prof
 steward
-rootfs/bin/steward
-rootfs/bin/steward.upx
+rootfs/bin/steward-cf
+rootfs/bin/steward-cf.upx
 vendor
 /coverage.txt
-integration/integration
-rootfs/bin/steward.000
+rootfs/bin/steward-cf.000
 
-manifests/*-steward.yaml
-manifests/*-steward.yaml.bak
+manifests/*-steward-cf.yaml
+manifests/*-steward-cf.yaml.bak
 
 kubeconfig.yaml

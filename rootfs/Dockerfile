@@ -1,7 +1,7 @@
-FROM quay.io/deis/base:0.3.0
+FROM quay.io/deis/base:v0.3.4
 
-COPY bin/steward /bin
+COPY bin/steward-cf /bin
 
 EXPOSE 8080
 
-CMD ["/bin/steward"]
+CMD ["/bin/steward-cf"]
