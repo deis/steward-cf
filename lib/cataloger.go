@@ -28,7 +28,7 @@ func (c *cataloger) List(ctx context.Context) ([]*framework.Service, error) {
 		return nil, err
 	}
 	defer res.Body.Close()
-	serviceList := new(framework.ServiceList)
+	serviceList := &serviceList{}
 	// TODO: drain the response body to avoid a connection leak
 	if err := json.NewDecoder(res.Body).Decode(serviceList); err != nil {
 		logger.Debugf("error decoding JSON response body from backend CF broker (%s)", err)
@@ -37,5 +37,5 @@ func (c *cataloger) List(ctx context.Context) ([]*framework.Service, error) {
 	if res.StatusCode != http.StatusOK {
 		return nil, errUnexpectedResponseCode{URL: req.URL.String(), Expected: http.StatusOK, Actual: res.StatusCode}
 	}
-	return serviceList.Services, nil
+	return serviceList.getFrameworkServices(), nil
 }

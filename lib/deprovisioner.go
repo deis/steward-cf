@@ -38,7 +38,7 @@ func (d *deprovisioner) Deprovision(
 	}
 	defer apiRes.Body.Close()
 
-	res := new(framework.DeprovisionResponse)
+	res := &deprovisionResponse{}
 	switch apiRes.StatusCode {
 	case http.StatusOK:
 		res.IsAsync = false
@@ -55,5 +55,5 @@ func (d *deprovisioner) Deprovision(
 	if err := json.NewDecoder(apiRes.Body).Decode(res); err != nil {
 		return nil, err
 	}
-	return res, nil
+	return res.getFrameworkDeprovisionResponse(), nil
 }

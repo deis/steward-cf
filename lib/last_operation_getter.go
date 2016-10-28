@@ -44,9 +44,9 @@ func (l *lastOperationGetter) GetLastOperation(
 			State: framework.LastOperationStateGone.String(),
 		}, nil
 	}
-	res := new(framework.GetLastOperationResponse)
+	res := &getLastOperationResponse{}
 	if err := json.NewDecoder(apiRes.Body).Decode(res); err != nil {
 		return nil, err
 	}
-	return res, nil
+	return res.getFrameworkGetLastOperationResponse(), nil
 }

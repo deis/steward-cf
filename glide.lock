@@ -1,5 +1,5 @@
 hash: a47cd1a2b6d3dbf743a6be11d5c6bf73a2631f031fd4c7bdd199927258c25d63
-updated: 2016-10-26T22:34:42.127649817Z
+updated: 2016-10-27T23:17:06.254880485Z
 imports:
 - name: github.com/arschles/assert
   version: bb58b908265b5931732079df03f2818bf2167ba0
@@ -19,7 +19,7 @@ imports:
   - htp
   - k8s
 - name: github.com/deis/steward-framework
-  version: 503d0816f198b84cdb40eec7c9b2a2e3eefd4591
+  version: 462f996468ab97a898e298ea42c07c7c4dfaefbc
   repo: https://github.com/krancour/steward-framework
   subpackages:
   - k8s
@@ -35,7 +35,7 @@ imports:
 - name: github.com/ghodss/yaml
   version: bea76d6a4713e18b7f5321a2b020738552def3ea
 - name: github.com/gogo/protobuf
-  version: 91cc2497504ffbaba9656e7d988ccfe41c54f6a9
+  version: a9cd0c35b97daf74d0ebf3514c5254814b2703b4
   subpackages:
   - proto
   - sortkeys
@@ -76,7 +76,7 @@ imports:
   subpackages:
   - codec
 - name: golang.org/x/net
-  version: 65dfc08770ce66f74becfdff5f8ab01caef4e946
+  version: b336a971b799939dd16ae9b1df8334cb8b977c4d
   subpackages:
   - context
   - http2

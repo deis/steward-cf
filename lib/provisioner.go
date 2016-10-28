@@ -28,7 +28,7 @@ func (p *provisioner) Provision(
 	query := url.Values(map[string][]string{})
 	query.Add(asyncQueryKey, "true")
 	bodyBytes := new(bytes.Buffer)
-	if err := json.NewEncoder(bodyBytes).Encode(req); err != nil {
+	if err := json.NewEncoder(bodyBytes).Encode(getAPIProvisionRequest(req)); err != nil {
 		return nil, err
 	}
 	apiReq, err := p.cl.Put(
@@ -46,7 +46,7 @@ func (p *provisioner) Provision(
 		return nil, err
 	}
 
-	res := new(framework.ProvisionResponse)
+	res := &provisionResponse{}
 	switch apiRes.StatusCode {
 	case http.StatusOK, http.StatusCreated:
 		res.IsAsync = false
@@ -62,5 +62,5 @@ func (p *provisioner) Provision(
 	if err := json.NewDecoder(apiRes.Body).Decode(res); err != nil {
 		return nil, err
 	}
-	return res, nil
+	return res.getFrameworkProvisionResponse(), nil
 }

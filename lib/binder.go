@@ -25,7 +25,7 @@ func (b *binder) Bind(
 ) (*framework.BindResponse, error) {
 
 	bodyBytes := new(bytes.Buffer)
-	if err := json.NewEncoder(bodyBytes).Encode(req); err != nil {
+	if err := json.NewEncoder(bodyBytes).Encode(getAPIBindRequest(req)); err != nil {
 		return nil, err
 	}
 
@@ -55,10 +55,10 @@ func (b *binder) Bind(
 		}
 	}
 
-	res := new(framework.BindResponse)
+	res := &bindResponse{}
 	if err := json.NewDecoder(apiRes.Body).Decode(res); err != nil {
 		return nil, err
 	}
 	logger.Debugf("got response %+v from backing broker", *res)
-	return res, nil
+	return res.getFrameworkBindResponse(), nil
 }
