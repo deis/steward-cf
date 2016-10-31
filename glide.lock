@@ -1,5 +1,5 @@
 hash: a47cd1a2b6d3dbf743a6be11d5c6bf73a2631f031fd4c7bdd199927258c25d63
-updated: 2016-10-27T23:17:06.254880485Z
+updated: 2016-10-31T18:01:12.67933535Z
 imports:
 - name: github.com/arschles/assert
   version: bb58b908265b5931732079df03f2818bf2167ba0
@@ -8,7 +8,7 @@ imports:
 - name: github.com/blang/semver
   version: 60ec3488bfea7cca02b021d106d9911120d25fe9
 - name: github.com/davecgh/go-spew
-  version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
+  version: 346938d642f2ec3594ed81d874461961cd0faa76
   subpackages:
   - spew
 - name: github.com/deis/k8s-claimer
@@ -19,12 +19,13 @@ imports:
   - htp
   - k8s
 - name: github.com/deis/steward-framework
-  version: 462f996468ab97a898e298ea42c07c7c4dfaefbc
+  version: 1cf10a94f3c74da0b9b40f5c82105196fa0164db
   repo: https://github.com/krancour/steward-framework
   subpackages:
   - k8s
   - k8s/claim
   - k8s/claim/state
+  - lib
   - runner
   - web/api
 - name: github.com/emicklei/go-restful
@@ -76,7 +77,7 @@ imports:
   subpackages:
   - codec
 - name: golang.org/x/net
-  version: b336a971b799939dd16ae9b1df8334cb8b977c4d
+  version: 4cfeeeb61ae8daa2a4b06572024786e56f23504c
   subpackages:
   - context
   - http2
