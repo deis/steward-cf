@@ -1,6 +1,6 @@
 # `ServiceCatalogEntry`
 
-This object is written to the `steward` namespace and represents a single service + plan pair that at least one Steward CF instance (through its backend service) can provision and bind. It has the following fields:
+This object is written to the `steward` namespace and represents a single service + plan pair that at least one Steward CF instance (through its backing broker) can provision and bind. It has the following fields:
 
 - `service_info` - an object containing information about the service. See below for a description of the fields in this object
 
@@ -76,19 +76,19 @@ This object is submitted by a service consumer in the form of a [`ConfigMap`][co
   - All new `ServicePlanClaim`s submitted by consumer must have `action` set to `provision` or `create`
   - If Steward CF encounters an error, any actions it has already completed will not be rolled back. See the following examples:
     - If you submit a claim with `action: create` and the bind step fails, the provision step will not be rolled back
-    - If you submit a claim with `action: bind` with a `target-name` that points to a Secret that already exists, Steward CF will execute the bind action on the backend but will fail to write the new credentials Secret. The backend bind action will not be rolled back
+    - If you submit a claim with `action: bind` with a `target-name` that points to a Secret that already exists, Steward CF will execute the bind action on the backing broker, but will fail to write the new credentials Secret. The backing broker bind action will not be rolled back
   - It is an error for this field to be empty
 
 - `status` - the current status of the claim. Steward CF will modify this value, but will ignore any modifications by the consumer. Valid values with short descriptions are listed below:
-  - `provisioning` - immediately after `action` is set to `provision` if the backend service carries out provisioning _synchronously_
-  - `provisioning-async` - immediately after `action` is set to `provision` if the backend service carries out provisioning _asynchronously_
+  - `provisioning` - immediately after `action` is set to `provision` if the backing broker carries out provisioning _synchronously_
+  - `provisioning-async` - immediately after `action` is set to `provision` if the backing broker carries out provisioning _asynchronously_
   - `provisioned` - after `action` is set to `provision` and the provisioning process has succeeded
   - `binding` - immediately after `action` is set to `bind`
   - `bound` - after `action` is set to `bind` and the binding process succeeded
   - `unbinding` - immediately after `action` is set to `unbind`
   - `unbound` - after `action` is set to `unbind` and the unbinding process succeeded
-  - `deprovisioning` - immediately after `action` is set to `deprovision` if the backend service carries out deprovisioning _synchronously_
-  - `deprovisioning-async` - immediately after `action` is set to `deprovision` if the backend service carries out deprovisioning _asynchronously_
+  - `deprovisioning` - immediately after `action` is set to `deprovision` if the backing broker carries out deprovisioning _synchronously_
+  - `deprovisioning-async` - immediately after `action` is set to `deprovision` if the backing broker carries out deprovisioning _asynchronously_
   - `deprovisioned` - after `action` is set to `deprovision` and the deprovisioning process succeeded
   - `failed` - after any `action` failed
 - `status-description` - a human-readable explanation of the current `status`. Steward CF will modify this value, but will ignore any modifications by consumer

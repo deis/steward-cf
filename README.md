@@ -58,8 +58,7 @@ kubectl logs -f ${STEWARD_CF_POD_NAME} --namespace=${STEWARD_NAMESPACE}
 
 Steward CF (via the Steward framework) runs a control loop to watch the Kubernetes event stream for a set of [`ThirdPartyResource`][3pr]s (called 3PRs hereafter) in one, some, or all available namespaces. It uses these 3PRs to communicate with an operator that requests a service.
 
-A single Steward CF process is responsible for talking to a single **Service Backend**. If a cluster operator wishes to expose multiple **Service Backends**, he or she would deploy additional instances of
-Steward CF.
+A single Steward CF process is responsible for talking to a single **backing broker**. If a cluster operator wishes to expose multiple **backing broker**, he or she would deploy additional instances of Steward CF.
 
 
 ## Available Services
