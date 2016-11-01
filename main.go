@@ -35,5 +35,6 @@ func main() {
 		cfg.APIPort,
 	); err != nil {
 		logger.Criticalf("error running steward-framework: %s", err)
+		os.Exit(1)
 	}
 }
