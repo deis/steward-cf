@@ -3,12 +3,11 @@ package k8s
 import (
 	"sync"
 
-	"k8s.io/client-go/1.4/kubernetes"
-	"k8s.io/client-go/1.4/pkg/api"
-	"k8s.io/client-go/1.4/pkg/api/errors"
-	"k8s.io/client-go/1.4/pkg/api/v1"
-	"k8s.io/client-go/1.4/rest"
-	"k8s.io/client-go/1.4/tools/clientcmd"
+	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/pkg/api/errors"
+	"k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/rest"
+	"k8s.io/client-go/tools/clientcmd"
 )
 
 const (
@@ -60,7 +59,7 @@ func DeleteNamespace(namespaceStr string) error {
 	}
 	nsClient := clientset.Namespaces()
 	// If the problem is just that the namespace doesn't exist, ignore it
-	if err := nsClient.Delete(namespaceStr, &api.DeleteOptions{}); err != nil && !errors.IsNotFound(err) {
+	if err := nsClient.Delete(namespaceStr, &v1.DeleteOptions{}); err != nil && !errors.IsNotFound(err) {
 		return err
 	}
 	return nil
