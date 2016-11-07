@@ -9,8 +9,8 @@ type getLastOperationResponse struct {
 	State string `json:"state"`
 }
 
-func (g *getLastOperationResponse) getFrameworkGetLastOperationResponse() *framework.GetLastOperationResponse {
-	return &framework.GetLastOperationResponse{
+func (g *getLastOperationResponse) getFrameworkOperationStatusResponse() *framework.OperationStatusResponse {
+	return &framework.OperationStatusResponse{
 		State: g.State,
 	}
 }

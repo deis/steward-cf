@@ -1,8 +1,8 @@
 hash: a47cd1a2b6d3dbf743a6be11d5c6bf73a2631f031fd4c7bdd199927258c25d63
-updated: 2016-10-31T18:01:12.67933535Z
+updated: 2016-11-07T11:13:36.974066429-05:00
 imports:
 - name: github.com/arschles/assert
-  version: bb58b908265b5931732079df03f2818bf2167ba0
+  version: fc2da9844984ce5093111298174706e14d4c0c47
 - name: github.com/arschles/testsrv
   version: 1ca51fb1a3b6e612411883cf1c9dbc58319b1d5b
 - name: github.com/blang/semver
@@ -19,7 +19,7 @@ imports:
   - htp
   - k8s
 - name: github.com/deis/steward-framework
-  version: 1cf10a94f3c74da0b9b40f5c82105196fa0164db
+  version: 8609f717f598737827d6338a6c5c3cd654118b04
   repo: https://github.com/krancour/steward-framework
   subpackages:
   - k8s
@@ -36,7 +36,7 @@ imports:
 - name: github.com/ghodss/yaml
   version: bea76d6a4713e18b7f5321a2b020738552def3ea
 - name: github.com/gogo/protobuf
-  version: a9cd0c35b97daf74d0ebf3514c5254814b2703b4
+  version: 8d70fb3182befc465c4a1eac8ad4d38ff49778e2
   subpackages:
   - proto
   - sortkeys
@@ -63,7 +63,7 @@ imports:
 - name: github.com/lunixbochs/vtclean
   version: 4fbf7632a2c6d3fbdb9931439bdbbeded02cbe36
 - name: github.com/mattn/go-colorable
-  version: 6c903ff4aa50920ca86087a280590b36b3152b9c
+  version: d228849504861217f796da67fae4f6e347643f15
 - name: github.com/mattn/go-isatty
   version: 66b8e73f3f5cda9f96b69efd03dd3d7fc4a5cdb8
 - name: github.com/pborman/uuid
@@ -77,17 +77,16 @@ imports:
   subpackages:
   - codec
 - name: golang.org/x/net
-  version: 4cfeeeb61ae8daa2a4b06572024786e56f23504c
+  version: 1358eff22f0dd0c54fc521042cc607f6ff4b531a
   subpackages:
   - context
   - http2
   - http2/hpack
-  - idna
   - lex/httplex
 - name: gopkg.in/inf.v0
   version: 3887ee99ecf07df5b447e9b00d9c0b2adaa9f3e4
 - name: gopkg.in/yaml.v2
-  version: a5b47d31c556af34a302ce5d659e6fea44d90de0
+  version: e4d366fc3c7938e2958e662b4258c7a89e1f0e3e
 - name: k8s.io/client-go
   version: 93fcd402979cfad8a7151f96e016416947c6a3cb
   subpackages:
