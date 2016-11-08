@@ -1,7 +1,4 @@
-# Steward CF
-
-[![Build Status](https://travis-ci.com/deis/steward-cf.svg?token=UQsxfwHAz3NPyVqxkrrp&branch=master)]
-(https://travis-ci.com/deis/steward-cf)
+# Steward CF [![Build Status](https://travis-ci.org/deis/steward-cf.svg?branch=master)](https://travis-ci.org/deis/steward-cf)
 
 Steward CF is a Kubernetes "service catalog controller--" a Kubernetes native service broker
 gateway for service brokers that implement the [CloudFoundry Service Broker API][cfbroker]. Steward
