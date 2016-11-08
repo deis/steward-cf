@@ -1,6 +1,5 @@
 package: github.com/deis/steward-cf
 ignore:
-  - k8s.io/kubernetes
   - camlistore.org
   - code.google.com
   - github.com/docker/docker
@@ -27,10 +26,7 @@ import:
 - package: github.com/kelseyhightower/envconfig
 - package: github.com/juju/loggo
 - package: github.com/arschles/testsrv
-- package: k8s.io/client-go/1.4
-  version: 93fcd402979cfad8a7151f96e016416947c6a3cb
+- package: k8s.io/client-go
 - package: github.com/deis/k8s-claimer
-  version: v0.1.0
 - package: github.com/technosophos/moniker
 - package: github.com/deis/steward-framework
-  repo: https://github.com/krancour/steward-framework

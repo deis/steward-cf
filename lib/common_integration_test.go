@@ -13,10 +13,10 @@ import (
 	testsetup "github.com/deis/steward-cf/testing/setup"
 	"github.com/deis/steward-framework"
 	"github.com/technosophos/moniker"
-	"k8s.io/client-go/1.4/kubernetes"
-	"k8s.io/client-go/1.4/pkg/api/v1"
-	"k8s.io/client-go/1.4/pkg/util/intstr"
-	"k8s.io/client-go/1.4/pkg/util/wait"
+	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/util/intstr"
+	"k8s.io/client-go/pkg/util/wait"
 )
 
 var (
