@@ -4,7 +4,7 @@
 (https://travis-ci.com/deis/steward-cf)
 
 Steward CF is a Kubernetes service catalog controller implementation that
-translates standard service catalog Kubernetes resources into [CloudFoundry Broker
+translates standard Kubernetes service catalog resources into [CloudFoundry Broker
 API][cfbroker] calls. This project is built on top of
 [steward-framework](https://gihub.com/deis/steward-framework), the common
 service catalog controller framework for Kubernetes.
