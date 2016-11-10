@@ -13,6 +13,7 @@ install:
 script:
 - make test-cover docker-build
 deploy:
+  skip_cleanup: true
   provider: script
   script: _scripts/deploy.sh
   on:
