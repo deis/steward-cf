@@ -19,12 +19,16 @@ const (
 )
 
 func TestProvision(t *testing.T) {
-	resp, err := testLifecycler.Provision(context.Background(), &framework.ProvisionRequest{
-		InstanceID:        fakeInstanceID,
-		ServiceID:         fakeServiceID,
-		PlanID:            fakePlanID,
-		AcceptsIncomplete: true,
-	})
+	resp, err := testLifecycler.Provision(
+		context.Background(),
+		testBrokerSpec,
+		&framework.ProvisionRequest{
+			InstanceID:        fakeInstanceID,
+			ServiceID:         fakeServiceID,
+			PlanID:            fakePlanID,
+			AcceptsIncomplete: true,
+		},
+	)
 	assert.NoErr(t, err)
 	// Compare to known results from cf-sample-broker...
 	assert.Equal(t, resp, &framework.ProvisionResponse{
@@ -33,35 +37,47 @@ func TestProvision(t *testing.T) {
 }
 
 func TestBind(t *testing.T) {
-	resp, err := testLifecycler.Bind(context.Background(), &framework.BindRequest{
-		InstanceID: fakeInstanceID,
-		ServiceID:  fakeServiceID,
-		PlanID:     fakePlanID,
-		BindingID:  fakeBindingID,
-	})
+	resp, err := testLifecycler.Bind(
+		context.Background(),
+		testBrokerSpec,
+		&framework.BindRequest{
+			InstanceID: fakeInstanceID,
+			ServiceID:  fakeServiceID,
+			PlanID:     fakePlanID,
+			BindingID:  fakeBindingID,
+		},
+	)
 	assert.NoErr(t, err)
 	// Compare to known results from cf-sample-broker...
 	assert.Equal(t, len(resp.Creds), 10, "credentials count")
 }
 
 func TestUnbind(t *testing.T) {
-	err := testLifecycler.Unbind(context.Background(), &framework.UnbindRequest{
-		InstanceID: fakeInstanceID,
-		ServiceID:  fakeServiceID,
-		PlanID:     fakePlanID,
-		BindingID:  fakeBindingID,
-	})
+	err := testLifecycler.Unbind(
+		context.Background(),
+		testBrokerSpec,
+		&framework.UnbindRequest{
+			InstanceID: fakeInstanceID,
+			ServiceID:  fakeServiceID,
+			PlanID:     fakePlanID,
+			BindingID:  fakeBindingID,
+		},
+	)
 	// Unbind returns no result except for any error that occurred...
 	assert.NoErr(t, err)
 }
 
 func TestDeprovision(t *testing.T) {
-	resp, err := testLifecycler.Deprovision(context.Background(), &framework.DeprovisionRequest{
-		InstanceID:        fakeInstanceID,
-		ServiceID:         fakeServiceID,
-		PlanID:            fakePlanID,
-		AcceptsIncomplete: true,
-	})
+	resp, err := testLifecycler.Deprovision(
+		context.Background(),
+		testBrokerSpec,
+		&framework.DeprovisionRequest{
+			InstanceID:        fakeInstanceID,
+			ServiceID:         fakeServiceID,
+			PlanID:            fakePlanID,
+			AcceptsIncomplete: true,
+		},
+	)
 	assert.NoErr(t, err)
 	// Compare to known results from cf-sample-broker...
 	assert.Equal(t, resp, &framework.DeprovisionResponse{

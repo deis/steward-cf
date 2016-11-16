@@ -27,8 +27,6 @@ func main() {
 	}
 
 	if err = runner.Run(
-		cfg.BrokerName,
-		cfg.Namespaces,
 		cataloger,
 		lifecycler,
 		cfg.getMaxAsyncDuration(),

@@ -22,6 +22,7 @@ func newProvisioner(cl *restClient) *provisioner {
 
 func (p *provisioner) Provision(
 	ctx context.Context,
+	brokerSpec framework.BrokerSpec,
 	req *framework.ProvisionRequest,
 ) (*framework.ProvisionResponse, error) {
 
@@ -32,6 +33,7 @@ func (p *provisioner) Provision(
 		return nil, err
 	}
 	apiReq, err := p.cl.Put(
+		brokerSpec,
 		query,
 		bodyBytes,
 		"v2",

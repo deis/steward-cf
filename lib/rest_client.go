@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/deis/steward-cf/web/ctxhttp"
+	"github.com/deis/steward-framework"
 )
 
 const (
@@ -38,24 +39,31 @@ func newRESTClient(cfg config) *restClient {
 }
 
 // returns the full URL to the broker, including basic auth
-func (c *restClient) fullBaseURL() string {
-	return fmt.Sprintf("%s://%s:%s@%s:%d",
-		c.cfg.BrokerAccessScheme,
-		c.cfg.BrokerUsername,
-		c.cfg.BrokerPassword,
-		c.cfg.BrokerHost,
-		c.cfg.BrokerPort)
+func (c *restClient) fullBaseURL(brokerSpec framework.BrokerSpec) string {
+	urlParts := strings.Split(brokerSpec.URL, "://")
+	return fmt.Sprintf(
+		"%s://%s:%s@%s",
+		urlParts[0],
+		brokerSpec.Username,
+		brokerSpec.Password,
+		urlParts[1],
+	)
 }
 
 // returns a fully formed URL string including a path comprised of pathElts
-func (c *restClient) urlStr(pathElts ...string) string {
+func (c *restClient) urlStr(brokerSpec framework.BrokerSpec, pathElts ...string) string {
 	pathStr := strings.Join(pathElts, "/")
-	return fmt.Sprintf("%s/%s", c.fullBaseURL(), pathStr)
+	return fmt.Sprintf("%s/%s", c.fullBaseURL(brokerSpec), pathStr)
 }
 
-// Get creates a GET request with the given query string values and path, or a non-nil error if request creation failed
-func (c *restClient) Get(query url.Values, pathElts ...string) (*http.Request, error) {
-	req, err := http.NewRequest("GET", c.urlStr(pathElts...), nil)
+// Get creates a GET request with the given query string values and path, or a non-nil error if
+// request creation failed
+func (c *restClient) Get(
+	brokerSpec framework.BrokerSpec,
+	query url.Values,
+	pathElts ...string,
+) (*http.Request, error) {
+	req, err := http.NewRequest("GET", c.urlStr(brokerSpec, pathElts...), nil)
 	if err != nil {
 		logger.Debugf("CF Client GET error (%s)", err)
 		return nil, err
@@ -66,9 +74,15 @@ func (c *restClient) Get(query url.Values, pathElts ...string) (*http.Request, e
 	return req, nil
 }
 
-// Put creates a PUT request with the given query string values, request body and path, or a non-nil error if request creation failed
-func (c *restClient) Put(query url.Values, body io.Reader, pathElts ...string) (*http.Request, error) {
-	req, err := http.NewRequest("PUT", c.urlStr(pathElts...), body)
+// Put creates a PUT request with the given query string values, request body and path, or a
+// non-nil error if request creation failed
+func (c *restClient) Put(
+	brokerSpec framework.BrokerSpec,
+	query url.Values,
+	body io.Reader,
+	pathElts ...string,
+) (*http.Request, error) {
+	req, err := http.NewRequest("PUT", c.urlStr(brokerSpec, pathElts...), body)
 	if err != nil {
 		logger.Debugf("CF Client PUT error (%s)", err)
 		return nil, err
@@ -79,9 +93,14 @@ func (c *restClient) Put(query url.Values, body io.Reader, pathElts ...string) (
 	return req, nil
 }
 
-// Delete creates a DELETE request with the given query string and path, or a non-nil error if request creation failed
-func (c *restClient) Delete(query url.Values, pathElts ...string) (*http.Request, error) {
-	req, err := http.NewRequest("DELETE", c.urlStr(pathElts...), nil)
+// Delete creates a DELETE request with the given query string and path, or a non-nil error if
+// request creation failed
+func (c *restClient) Delete(
+	brokerSpec framework.BrokerSpec,
+	query url.Values,
+	pathElts ...string,
+) (*http.Request, error) {
+	req, err := http.NewRequest("DELETE", c.urlStr(brokerSpec, pathElts...), nil)
 	if err != nil {
 		logger.Debugf("CF Client DELETE error (%s)", err)
 		return nil, err

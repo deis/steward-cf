@@ -12,32 +12,29 @@ import (
 
 	"github.com/arschles/assert"
 	"github.com/arschles/testsrv"
+	"github.com/deis/steward-framework"
 )
 
 const (
 	scheme     = "http"
 	host       = "randhost"
 	port       = 8080
-	user       = "testuser"
-	pass       = "testpass"
 	timeoutSec = 5
 	pathElt1   = "path1"
 	pathElt2   = "path2"
 	pathElt3   = "path3"
 )
 
-var testCfg config
-
-func init() {
+var (
 	testCfg = config{
-		BrokerAccessScheme:      scheme,
-		BrokerHost:              host,
-		BrokerPort:              port,
-		BrokerUsername:          user,
-		BrokerPassword:          pass,
 		BrokerRequestTimeoutSec: timeoutSec,
 	}
-}
+	brokerSpec = framework.BrokerSpec{
+		URL:      fmt.Sprintf("%s://%s:%d", scheme, host, port),
+		Username: "testuser",
+		Password: "testpass",
+	}
+)
 
 func strSliceEq(s1, s2 []string) bool {
 	if len(s1) != len(s2) {
@@ -73,14 +70,24 @@ var (
 
 func TestURLStr(t *testing.T) {
 	rc := newRESTClient(testCfg)
-	urlStr := rc.urlStr(pathElt1, pathElt2, pathElt3)
-	assert.Equal(t, urlStr, fmt.Sprintf("%s/%s/%s/%s", rc.fullBaseURL(), pathElt1, pathElt2, pathElt3), "url string")
+	urlStr := rc.urlStr(brokerSpec, pathElt1, pathElt2, pathElt3)
+	assert.Equal(
+		t,
+		urlStr,
+		fmt.Sprintf("%s/%s/%s/%s", rc.fullBaseURL(brokerSpec), pathElt1, pathElt2, pathElt3),
+		"url string",
+	)
 }
 
 func TestFullBaseURL(t *testing.T) {
 	rc := newRESTClient(testCfg)
-	fullURL := rc.fullBaseURL()
-	assert.Equal(t, fullURL, fmt.Sprintf("%s://%s:%s@%s:%d", scheme, user, pass, host, port), "full url string")
+	fullURL := rc.fullBaseURL(brokerSpec)
+	assert.Equal(
+		t,
+		fullURL,
+		fmt.Sprintf("%s://%s:%s@%s:%d", scheme, brokerSpec.Username, brokerSpec.Password, host, port),
+		"full url string",
+	)
 }
 
 func testReq(
@@ -134,23 +141,68 @@ func testReq(
 
 func TestGet(t *testing.T) {
 	rc := newRESTClient(testCfg)
-	getReq, err := rc.Get(queryStr, pathElt1, pathElt2, pathElt3)
+	getReq, err := rc.Get(brokerSpec, queryStr, pathElt1, pathElt2, pathElt3)
 	assert.NoErr(t, err)
-	assert.NoErr(t, testReq(getReq, "GET", scheme, host, port, user, pass, queryStr, pathElt1, pathElt2, pathElt3))
+	assert.NoErr(
+		t,
+		testReq(
+			getReq,
+			"GET",
+			scheme,
+			host,
+			port,
+			brokerSpec.Username,
+			brokerSpec.Password,
+			queryStr,
+			pathElt1,
+			pathElt2,
+			pathElt3,
+		),
+	)
 }
 
 func TestPut(t *testing.T) {
 	rc := newRESTClient(testCfg)
-	putReq, err := rc.Put(queryStr, nil, pathElt1, pathElt2, pathElt3)
+	putReq, err := rc.Put(brokerSpec, queryStr, nil, pathElt1, pathElt2, pathElt3)
 	assert.NoErr(t, err)
-	assert.NoErr(t, testReq(putReq, "PUT", scheme, host, port, user, pass, queryStr, pathElt1, pathElt2, pathElt3))
+	assert.NoErr(
+		t,
+		testReq(
+			putReq,
+			"PUT",
+			scheme,
+			host,
+			port,
+			brokerSpec.Username,
+			brokerSpec.Password,
+			queryStr,
+			pathElt1,
+			pathElt2,
+			pathElt3,
+		),
+	)
 }
 
 func TestDelete(t *testing.T) {
 	rc := newRESTClient(testCfg)
-	delReq, err := rc.Delete(queryStr, pathElt1, pathElt2, pathElt3)
+	delReq, err := rc.Delete(brokerSpec, queryStr, pathElt1, pathElt2, pathElt3)
 	assert.NoErr(t, err)
-	assert.NoErr(t, testReq(delReq, "DELETE", scheme, host, port, user, pass, queryStr, pathElt1, pathElt2, pathElt3))
+	assert.NoErr(
+		t,
+		testReq(
+			delReq,
+			"DELETE",
+			scheme,
+			host,
+			port,
+			brokerSpec.Username,
+			brokerSpec.Password,
+			queryStr,
+			pathElt1,
+			pathElt2,
+			pathElt3,
+		),
+	)
 }
 
 func TestDo(t *testing.T) {
@@ -162,15 +214,8 @@ func TestDo(t *testing.T) {
 	assert.NoErr(t, err)
 	hostSpl := strings.Split(u.Host, ":")
 	assert.True(t, len(hostSpl) == 2, "host string was invalid")
-	host := hostSpl[0]
-	port, err := strconv.Atoi(hostSpl[1])
 	assert.NoErr(t, err)
 	rc := newRESTClient(config{
-		BrokerAccessScheme:      u.Scheme,
-		BrokerHost:              host,
-		BrokerPort:              port,
-		BrokerUsername:          user,
-		BrokerPassword:          pass,
 		BrokerRequestTimeoutSec: timeoutSec,
 	})
 	req, err := http.NewRequest("GET", srv.URLStr(), nil)

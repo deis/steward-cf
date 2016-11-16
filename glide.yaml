@@ -27,6 +27,8 @@ import:
 - package: github.com/juju/loggo
 - package: github.com/arschles/testsrv
 - package: k8s.io/client-go
+  version: 89c60099837a47cfce19bd14e2d1f16c4670fd58
 - package: github.com/deis/k8s-claimer
 - package: github.com/technosophos/moniker
 - package: github.com/deis/steward-framework
+  version: 5d58b53709b3b2a9b5a87445ab61f5bd183b2b81

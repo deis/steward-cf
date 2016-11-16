@@ -18,8 +18,11 @@ func newCataloger(cl *restClient) *cataloger {
 	}
 }
 
-func (c *cataloger) List(ctx context.Context) ([]*framework.Service, error) {
-	req, err := c.cl.Get(emptyQuery, "v2", "catalog")
+func (c *cataloger) List(
+	ctx context.Context,
+	brokerSpec framework.BrokerSpec,
+) ([]*framework.Service, error) {
+	req, err := c.cl.Get(brokerSpec, emptyQuery, "v2", "catalog")
 	if err != nil {
 		return nil, err
 	}

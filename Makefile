@@ -61,35 +61,10 @@ install-namespace:
 DEPLOY_IMAGE ?= quay.io/deisci/${SHORT_NAME}:devel
 
 install:
-ifndef BROKER_NAME
-	$(error BROKER_NAME is undefined)
-endif
-ifndef BROKER_ACCESS_SCHEME
-	$(error BROKER_ACCESS_SCHEME is undefined)
-endif
-ifndef BROKER_HOST
-	$(error BROKER_HOST is undefined)
-endif
-ifndef BROKER_PORT
-	$(error BROKER_PORT is undefined)
-endif
-ifndef BROKER_USERNAME
-	$(error BROKER_USERNAME is undefined)
-endif
-ifndef BROKER_PASSWORD
-	$(error BROKER_PASSWORD is undefined)
-endif
-	sed "s/#broker_name#/${BROKER_NAME}/g" manifests/${SHORT_NAME}-template.yaml > manifests/${BROKER_NAME}-${SHORT_NAME}.yaml
-	sed -i.bak "s/#broker_access_scheme#/${BROKER_ACCESS_SCHEME}/g" manifests/${BROKER_NAME}-${SHORT_NAME}.yaml
-	sed -i.bak "s/#broker_host#/${BROKER_HOST}/g" manifests/${BROKER_NAME}-${SHORT_NAME}.yaml
-	sed -i.bak "s/#broker_port#/${BROKER_PORT}/g" manifests/${BROKER_NAME}-${SHORT_NAME}.yaml
-	sed -i.bak "s/#broker_username#/${BROKER_USERNAME}/g" manifests/${BROKER_NAME}-${SHORT_NAME}.yaml
-	sed -i.bak "s/#broker_password#/${BROKER_PASSWORD}/g" manifests/${BROKER_NAME}-${SHORT_NAME}.yaml
-	sed -i.bak "s#\#deploy_image\##${DEPLOY_IMAGE}#g" manifests/${BROKER_NAME}-${SHORT_NAME}.yaml
-	rm manifests/${BROKER_NAME}-${SHORT_NAME}.yaml.bak
-	kubectl get deployment ${BROKER_NAME}-${SHORT_NAME} --namespace=steward && \
-	kubectl apply -f manifests/${BROKER_NAME}-${SHORT_NAME}.yaml || \
-	kubectl create -f manifests/${BROKER_NAME}-${SHORT_NAME}.yaml
+	sed "s#\#deploy_image\##${DEPLOY_IMAGE}#g" manifests/${SHORT_NAME}-template.yaml > manifests/${SHORT_NAME}.yaml
+	kubectl get deployment ${SHORT_NAME} --namespace=steward && \
+	kubectl apply -f manifests/${SHORT_NAME}.yaml || \
+	kubectl create -f manifests/${SHORT_NAME}.yaml
 
 deploy: install-namespace install
 

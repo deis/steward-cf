@@ -10,7 +10,7 @@ import (
 )
 
 func TestCFCataloger(t *testing.T) {
-	services, err := testCataloger.List(context.Background())
+	services, err := testCataloger.List(context.Background(), testBrokerSpec)
 	assert.NoErr(t, err)
 	// Compare to known results from cf-sample-broker...
 	expectedServiceCount := 3

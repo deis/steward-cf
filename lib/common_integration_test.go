@@ -3,8 +3,8 @@
 package lib
 
 import (
+	"fmt"
 	"log"
-	"os"
 	"sync"
 	"testing"
 	"time"
@@ -24,6 +24,10 @@ var (
 	testCataloger  framework.Cataloger
 	testLifecycler framework.Lifecycler
 	testNamespace  string
+	testBrokerSpec = framework.BrokerSpec{
+		Username: "admin",
+		Password: "password",
+	}
 )
 
 func TestMain(m *testing.M) {
@@ -194,11 +198,7 @@ func ensureBroker() error {
 	// reluctantly, we're waiting an extra 30 seconds here. With This extra bit of padding, the
 	// first response from the sample broker is reliably received in little more than 100 ms.
 	time.Sleep(time.Duration(30) * time.Second)
-	os.Setenv("BROKER_ACCESS_SCHEME", "http")
-	os.Setenv("BROKER_HOST", service.Status.LoadBalancer.Ingress[0].IP)
-	os.Setenv("BROKER_PORT", "80")
-	os.Setenv("BROKER_USERNAME", "admin")
-	os.Setenv("BROKER_PASSWORD", "password")
+	testBrokerSpec.URL = fmt.Sprintf("http://%s", service.Status.LoadBalancer.Ingress[0].IP)
 	return nil
 }
 
