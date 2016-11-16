@@ -3,6 +3,8 @@
 # Build and push Docker images to quay.io.
 #
 
+set -eo pipefail
+
 cd "$(dirname "$0")" || exit 1
 
 export IMAGE_PREFIX=deisci
