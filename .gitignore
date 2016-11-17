@@ -33,3 +33,4 @@ manifests/*-steward-cf.yaml
 manifests/*-steward-cf.yaml.bak
 
 kubeconfig.yaml
+steward-cf
