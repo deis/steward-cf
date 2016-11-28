@@ -29,7 +29,6 @@ vendor
 /coverage.txt
 rootfs/bin/steward-cf.000
 
-manifests/*-steward-cf.yaml
-manifests/*-steward-cf.yaml.bak
+manifests/steward-cf.yaml
 
 kubeconfig.yaml

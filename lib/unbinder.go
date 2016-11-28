@@ -20,6 +20,7 @@ func newUnbinder(cl *restClient) *unbinder {
 
 func (u *unbinder) Unbind(
 	ctx context.Context,
+	brokerSpec framework.BrokerSpec,
 	req *framework.UnbindRequest,
 ) error {
 
@@ -27,6 +28,7 @@ func (u *unbinder) Unbind(
 	query.Add(serviceIDQueryKey, req.ServiceID)
 	query.Add(planIDQueryKey, req.PlanID)
 	apiReq, err := u.cl.Delete(
+		brokerSpec,
 		query,
 		"v2",
 		"service_instances",

@@ -8,11 +8,9 @@ import (
 )
 
 type config struct {
-	BrokerName      string   `envconfig:"BROKER_NAME" required:"true"`
-	Namespaces      []string `envconfig:"WATCH_NAMESPACES" default:"default"`
-	MaxAsyncMinutes int      `envconfig:"MAX_ASYNC_MINUTES" default:"60"`
-	APIPort         int      `envconfig:"API_PORT" default:"8080"`
-	LogLevel        string   `envconfig:"LOG_LEVEL" default:"info"`
+	MaxAsyncMinutes int    `envconfig:"MAX_ASYNC_MINUTES" default:"60"`
+	APIPort         int    `envconfig:"API_PORT" default:"8080"`
+	LogLevel        string `envconfig:"LOG_LEVEL" default:"info"`
 }
 
 func getConfig() (*config, error) {

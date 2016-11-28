@@ -21,6 +21,7 @@ func newDeprovisioner(cl *restClient) *deprovisioner {
 
 func (d *deprovisioner) Deprovision(
 	ctx context.Context,
+	brokerSpec framework.BrokerSpec,
 	req *framework.DeprovisionRequest,
 ) (*framework.DeprovisionResponse, error) {
 
@@ -28,7 +29,7 @@ func (d *deprovisioner) Deprovision(
 	query.Add(serviceIDQueryKey, req.ServiceID)
 	query.Add(planIDQueryKey, req.PlanID)
 	query.Add(asyncQueryKey, "true")
-	apiReq, err := d.cl.Delete(query, "v2", "service_instances", req.InstanceID)
+	apiReq, err := d.cl.Delete(brokerSpec, query, "v2", "service_instances", req.InstanceID)
 	if err != nil {
 		return nil, err
 	}
