@@ -32,3 +32,4 @@ rootfs/bin/steward-cf.000
 manifests/steward-cf.yaml
 
 kubeconfig.yaml
+steward-cf
