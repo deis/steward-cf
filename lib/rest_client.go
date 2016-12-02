@@ -39,7 +39,7 @@ func newRESTClient(cfg config) *restClient {
 }
 
 // returns the full URL to the broker, including basic auth
-func (c *restClient) fullBaseURL(brokerSpec framework.BrokerSpec) string {
+func (c *restClient) fullBaseURL(brokerSpec framework.ServiceBrokerSpec) string {
 	urlParts := strings.Split(brokerSpec.URL, "://")
 	return fmt.Sprintf(
 		"%s://%s:%s@%s",
@@ -51,7 +51,7 @@ func (c *restClient) fullBaseURL(brokerSpec framework.BrokerSpec) string {
 }
 
 // returns a fully formed URL string including a path comprised of pathElts
-func (c *restClient) urlStr(brokerSpec framework.BrokerSpec, pathElts ...string) string {
+func (c *restClient) urlStr(brokerSpec framework.ServiceBrokerSpec, pathElts ...string) string {
 	pathStr := strings.Join(pathElts, "/")
 	return fmt.Sprintf("%s/%s", c.fullBaseURL(brokerSpec), pathStr)
 }
@@ -59,7 +59,7 @@ func (c *restClient) urlStr(brokerSpec framework.BrokerSpec, pathElts ...string)
 // Get creates a GET request with the given query string values and path, or a non-nil error if
 // request creation failed
 func (c *restClient) Get(
-	brokerSpec framework.BrokerSpec,
+	brokerSpec framework.ServiceBrokerSpec,
 	query url.Values,
 	pathElts ...string,
 ) (*http.Request, error) {
@@ -77,7 +77,7 @@ func (c *restClient) Get(
 // Put creates a PUT request with the given query string values, request body and path, or a
 // non-nil error if request creation failed
 func (c *restClient) Put(
-	brokerSpec framework.BrokerSpec,
+	brokerSpec framework.ServiceBrokerSpec,
 	query url.Values,
 	body io.Reader,
 	pathElts ...string,
@@ -96,7 +96,7 @@ func (c *restClient) Put(
 // Delete creates a DELETE request with the given query string and path, or a non-nil error if
 // request creation failed
 func (c *restClient) Delete(
-	brokerSpec framework.BrokerSpec,
+	brokerSpec framework.ServiceBrokerSpec,
 	query url.Values,
 	pathElts ...string,
 ) (*http.Request, error) {

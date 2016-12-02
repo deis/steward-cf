@@ -20,11 +20,11 @@ import (
 )
 
 var (
-	clientset      *kubernetes.Clientset
-	testCataloger  framework.Cataloger
-	testLifecycler framework.Lifecycler
-	testNamespace  string
-	testBrokerSpec = framework.BrokerSpec{
+	clientset             *kubernetes.Clientset
+	testCataloger         framework.Cataloger
+	testLifecycler        framework.Lifecycler
+	testNamespace         string
+	testServiceBrokerSpec = framework.ServiceBrokerSpec{
 		Username: "admin",
 		Password: "password",
 	}
@@ -198,7 +198,7 @@ func ensureBroker() error {
 	// reluctantly, we're waiting an extra 30 seconds here. With This extra bit of padding, the
 	// first response from the sample broker is reliably received in little more than 100 ms.
 	time.Sleep(time.Duration(30) * time.Second)
-	testBrokerSpec.URL = fmt.Sprintf("http://%s", service.Status.LoadBalancer.Ingress[0].IP)
+	testServiceBrokerSpec.URL = fmt.Sprintf("http://%s", service.Status.LoadBalancer.Ingress[0].IP)
 	return nil
 }
 

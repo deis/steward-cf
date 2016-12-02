@@ -29,7 +29,7 @@ var (
 	testCfg = config{
 		BrokerRequestTimeoutSec: timeoutSec,
 	}
-	brokerSpec = framework.BrokerSpec{
+	serviceBrokerSpec = framework.ServiceBrokerSpec{
 		URL:      fmt.Sprintf("%s://%s:%d", scheme, host, port),
 		Username: "testuser",
 		Password: "testpass",
@@ -70,22 +70,22 @@ var (
 
 func TestURLStr(t *testing.T) {
 	rc := newRESTClient(testCfg)
-	urlStr := rc.urlStr(brokerSpec, pathElt1, pathElt2, pathElt3)
+	urlStr := rc.urlStr(serviceBrokerSpec, pathElt1, pathElt2, pathElt3)
 	assert.Equal(
 		t,
 		urlStr,
-		fmt.Sprintf("%s/%s/%s/%s", rc.fullBaseURL(brokerSpec), pathElt1, pathElt2, pathElt3),
+		fmt.Sprintf("%s/%s/%s/%s", rc.fullBaseURL(serviceBrokerSpec), pathElt1, pathElt2, pathElt3),
 		"url string",
 	)
 }
 
 func TestFullBaseURL(t *testing.T) {
 	rc := newRESTClient(testCfg)
-	fullURL := rc.fullBaseURL(brokerSpec)
+	fullURL := rc.fullBaseURL(serviceBrokerSpec)
 	assert.Equal(
 		t,
 		fullURL,
-		fmt.Sprintf("%s://%s:%s@%s:%d", scheme, brokerSpec.Username, brokerSpec.Password, host, port),
+		fmt.Sprintf("%s://%s:%s@%s:%d", scheme, serviceBrokerSpec.Username, serviceBrokerSpec.Password, host, port),
 		"full url string",
 	)
 }
@@ -141,7 +141,7 @@ func testReq(
 
 func TestGet(t *testing.T) {
 	rc := newRESTClient(testCfg)
-	getReq, err := rc.Get(brokerSpec, queryStr, pathElt1, pathElt2, pathElt3)
+	getReq, err := rc.Get(serviceBrokerSpec, queryStr, pathElt1, pathElt2, pathElt3)
 	assert.NoErr(t, err)
 	assert.NoErr(
 		t,
@@ -151,8 +151,8 @@ func TestGet(t *testing.T) {
 			scheme,
 			host,
 			port,
-			brokerSpec.Username,
-			brokerSpec.Password,
+			serviceBrokerSpec.Username,
+			serviceBrokerSpec.Password,
 			queryStr,
 			pathElt1,
 			pathElt2,
@@ -163,7 +163,7 @@ func TestGet(t *testing.T) {
 
 func TestPut(t *testing.T) {
 	rc := newRESTClient(testCfg)
-	putReq, err := rc.Put(brokerSpec, queryStr, nil, pathElt1, pathElt2, pathElt3)
+	putReq, err := rc.Put(serviceBrokerSpec, queryStr, nil, pathElt1, pathElt2, pathElt3)
 	assert.NoErr(t, err)
 	assert.NoErr(
 		t,
@@ -173,8 +173,8 @@ func TestPut(t *testing.T) {
 			scheme,
 			host,
 			port,
-			brokerSpec.Username,
-			brokerSpec.Password,
+			serviceBrokerSpec.Username,
+			serviceBrokerSpec.Password,
 			queryStr,
 			pathElt1,
 			pathElt2,
@@ -185,7 +185,7 @@ func TestPut(t *testing.T) {
 
 func TestDelete(t *testing.T) {
 	rc := newRESTClient(testCfg)
-	delReq, err := rc.Delete(brokerSpec, queryStr, pathElt1, pathElt2, pathElt3)
+	delReq, err := rc.Delete(serviceBrokerSpec, queryStr, pathElt1, pathElt2, pathElt3)
 	assert.NoErr(t, err)
 	assert.NoErr(
 		t,
@@ -195,8 +195,8 @@ func TestDelete(t *testing.T) {
 			scheme,
 			host,
 			port,
-			brokerSpec.Username,
-			brokerSpec.Password,
+			serviceBrokerSpec.Username,
+			serviceBrokerSpec.Password,
 			queryStr,
 			pathElt1,
 			pathElt2,

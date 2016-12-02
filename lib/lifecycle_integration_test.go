@@ -21,7 +21,7 @@ const (
 func TestProvision(t *testing.T) {
 	resp, err := testLifecycler.Provision(
 		context.Background(),
-		testBrokerSpec,
+		testServiceBrokerSpec,
 		&framework.ProvisionRequest{
 			InstanceID:        fakeInstanceID,
 			ServiceID:         fakeServiceID,
@@ -39,7 +39,7 @@ func TestProvision(t *testing.T) {
 func TestBind(t *testing.T) {
 	resp, err := testLifecycler.Bind(
 		context.Background(),
-		testBrokerSpec,
+		testServiceBrokerSpec,
 		&framework.BindRequest{
 			InstanceID: fakeInstanceID,
 			ServiceID:  fakeServiceID,
@@ -55,7 +55,7 @@ func TestBind(t *testing.T) {
 func TestUnbind(t *testing.T) {
 	err := testLifecycler.Unbind(
 		context.Background(),
-		testBrokerSpec,
+		testServiceBrokerSpec,
 		&framework.UnbindRequest{
 			InstanceID: fakeInstanceID,
 			ServiceID:  fakeServiceID,
@@ -70,7 +70,7 @@ func TestUnbind(t *testing.T) {
 func TestDeprovision(t *testing.T) {
 	resp, err := testLifecycler.Deprovision(
 		context.Background(),
-		testBrokerSpec,
+		testServiceBrokerSpec,
 		&framework.DeprovisionRequest{
 			InstanceID:        fakeInstanceID,
 			ServiceID:         fakeServiceID,

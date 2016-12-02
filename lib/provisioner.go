@@ -22,7 +22,7 @@ func newProvisioner(cl *restClient) *provisioner {
 
 func (p *provisioner) Provision(
 	ctx context.Context,
-	brokerSpec framework.BrokerSpec,
+	brokerSpec framework.ServiceBrokerSpec,
 	req *framework.ProvisionRequest,
 ) (*framework.ProvisionResponse, error) {
 

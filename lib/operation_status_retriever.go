@@ -21,7 +21,7 @@ func newOperationStatusRetriever(cl *restClient) *operationStatusRetriever {
 
 func (o *operationStatusRetriever) GetOperationStatus(
 	ctx context.Context,
-	brokerSpec framework.BrokerSpec,
+	serviceBrokerSpec framework.ServiceBrokerSpec,
 	req *framework.OperationStatusRequest,
 ) (*framework.OperationStatusResponse, error) {
 
@@ -29,7 +29,7 @@ func (o *operationStatusRetriever) GetOperationStatus(
 	query.Add(serviceIDQueryKey, req.ServiceID)
 	query.Add(planIDQueryKey, req.PlanID)
 	query.Add(operationQueryKey, req.Operation)
-	apiReq, err := o.cl.Get(brokerSpec, query, "v2", "service_instances", req.InstanceID, "last_operation")
+	apiReq, err := o.cl.Get(serviceBrokerSpec, query, "v2", "service_instances", req.InstanceID, "last_operation")
 	if err != nil {
 		return nil, err
 	}

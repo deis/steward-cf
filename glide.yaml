@@ -31,4 +31,4 @@ import:
 - package: github.com/deis/k8s-claimer
 - package: github.com/technosophos/moniker
 - package: github.com/deis/steward-framework
-  version: 5d58b53709b3b2a9b5a87445ab61f5bd183b2b81
+  version: 2f31541a3ec26f5cb06bbd735b60694cf3310f98
