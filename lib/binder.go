@@ -21,7 +21,7 @@ func newBinder(cl *restClient) *binder {
 
 func (b *binder) Bind(
 	ctx context.Context,
-	brokerSpec framework.BrokerSpec,
+	serviceBrokerSpec framework.ServiceBrokerSpec,
 	req *framework.BindRequest,
 ) (*framework.BindResponse, error) {
 
@@ -31,7 +31,7 @@ func (b *binder) Bind(
 	}
 
 	apiReq, err := b.cl.Put(
-		brokerSpec,
+		serviceBrokerSpec,
 		emptyQuery,
 		bodyBytes,
 		"v2",

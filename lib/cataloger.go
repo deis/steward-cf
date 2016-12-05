@@ -20,9 +20,9 @@ func newCataloger(cl *restClient) *cataloger {
 
 func (c *cataloger) List(
 	ctx context.Context,
-	brokerSpec framework.BrokerSpec,
+	serviceBrokerSpec framework.ServiceBrokerSpec,
 ) ([]*framework.Service, error) {
-	req, err := c.cl.Get(brokerSpec, emptyQuery, "v2", "catalog")
+	req, err := c.cl.Get(serviceBrokerSpec, emptyQuery, "v2", "catalog")
 	if err != nil {
 		return nil, err
 	}

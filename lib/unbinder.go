@@ -20,7 +20,7 @@ func newUnbinder(cl *restClient) *unbinder {
 
 func (u *unbinder) Unbind(
 	ctx context.Context,
-	brokerSpec framework.BrokerSpec,
+	brokerSpec framework.ServiceBrokerSpec,
 	req *framework.UnbindRequest,
 ) error {
 

@@ -1,5 +1,5 @@
-hash: 1a47971d3ec645bd96d0169176d9c9e150d511fe30dc1401192a64d581524a2f
-updated: 2016-11-28T15:33:59.154420039-05:00
+hash: 1a40430018bccd114268ab8ed3295567d4a924bcb7b223525ecb7604af72c012
+updated: 2016-12-05T14:34:10.726713409-05:00
 imports:
 - name: github.com/arschles/assert
   version: bb58b908265b5931732079df03f2818bf2167ba0
@@ -33,15 +33,15 @@ imports:
   - htp
   - k8s
 - name: github.com/deis/steward-framework
-  version: 5d58b53709b3b2a9b5a87445ab61f5bd183b2b81
+  version: 2f31541a3ec26f5cb06bbd735b60694cf3310f98
   subpackages:
   - k8s
-  - k8s/binding
-  - k8s/broker
   - k8s/clients
   - k8s/data
-  - k8s/instance
   - k8s/refs
+  - k8s/servicebinding
+  - k8s/servicebroker
+  - k8s/serviceinstance
   - k8s/tprs
   - lib
   - runner
@@ -91,7 +91,7 @@ imports:
 - name: github.com/juju/loggo
   version: 3b7ece48644d35850f4ced4c2cbc2cf8413f58e0
 - name: github.com/kelseyhightower/envconfig
-  version: 9aca109c9aec4633fced9717c4a09ecab3d33111
+  version: ac879f01990976d36677903ead78ae78dece48f1
 - name: github.com/lunixbochs/vtclean
   version: 4fbf7632a2c6d3fbdb9931439bdbbeded02cbe36
 - name: github.com/mailru/easyjson
@@ -103,7 +103,7 @@ imports:
 - name: github.com/mattn/go-colorable
   version: d228849504861217f796da67fae4f6e347643f15
 - name: github.com/mattn/go-isatty
-  version: 66b8e73f3f5cda9f96b69efd03dd3d7fc4a5cdb8
+  version: 30a891c33c7cde7b02a981314b4228ec99380cca
 - name: github.com/pborman/uuid
   version: ca53cad383cad2479bbba7f7a1a05797ec1386e4
 - name: github.com/PuerkitoBio/purell
